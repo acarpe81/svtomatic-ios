@@ -8,27 +8,16 @@ workflows:
       app_store_connect: Alexander Carpenter
 
     environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: io.github.acarpe81.svtomatic
       vars:
         XCODE_WORKSPACE: "src/SVT-O-MATIC_ EP training tool.xcworkspace"
         XCODE_SCHEME: "SVT-O-MATIC_ EP training tool"
-        BUNDLE_ID: "io.github.acarpe81.svtomatic"
       xcode: latest
       cocoapods: default
 
     scripts:
-      - name: Set up keychain
-        script: |
-          keychain initialize
-
-      - name: Fetch signing files (create if missing)
-        script: |
-          APP_STORE_CONNECT_CERTIFICATE_PRIVATE_KEY=$(openssl genrsa 2048)
-          export APP_STORE_CONNECT_CERTIFICATE_PRIVATE_KEY
-          app-store-connect fetch-signing-files "$BUNDLE_ID" \
-            --type IOS_APP_STORE \
-            --create
-          keychain add-certificates
-
       - name: Install CocoaPods dependencies
         script: |
           cd src
