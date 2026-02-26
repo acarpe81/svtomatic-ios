@@ -32,7 +32,7 @@ workflows:
 
       - name: Submit to TestFlight
         script: |
-          printf '-----BEGIN PRIVATE KEY-----\n%s\n-----END PRIVATE KEY-----\n' "$APP_STORE_CONNECT_KEY_CONTENT" > /tmp/auth_key.p8
+          printf '%b' "$APP_STORE_CONNECT_KEY_PEM" > /tmp/auth_key.p8
           IPA_PATH=$(find build/ios/ipa -name "*.ipa" | head -1)
           app-store-connect publish \
             --path "$IPA_PATH" \
