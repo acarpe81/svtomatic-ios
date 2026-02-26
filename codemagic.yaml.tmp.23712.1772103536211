@@ -7,7 +7,7 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: io.github.acarpe81.svtomatic
+        bundle_identifier: io.github.acarpe81
       vars:
         XCODE_WORKSPACE: "src/SVT-O-MATIC_ EP training tool.xcworkspace"
         XCODE_SCHEME: "SVT-O-MATIC_ EP training tool"
