@@ -25,6 +25,11 @@ workflows:
           cd src
           pod install --repo-update
 
+      - name: Set build number
+        script: |
+          cd src
+          xcrun agvtool new-version -all $BUILD_NUMBER
+
       - name: Build and export IPA
         script: |
           xcode-project use-profiles
