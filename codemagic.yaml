@@ -34,12 +34,11 @@ workflows:
 
       - name: Submit to TestFlight
         script: |
-          printf '%b' "$APP_STORE_CONNECT_PRIVATE_KEY" > /tmp/auth_key.p8
+          export APP_STORE_CONNECT_PRIVATE_KEY=$(printf '%b' "$APP_STORE_CONNECT_PRIVATE_KEY")
           IPA_PATH=$(find build/ios/ipa -name "*.ipa" | head -1)
           app-store-connect publish \
             --path "$IPA_PATH" \
             --testflight \
-            --private-key @file:/tmp/auth_key.p8 \
             --key-id "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
             --issuer-id "$APP_STORE_CONNECT_ISSUER_ID"
 
