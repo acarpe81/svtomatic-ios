@@ -30,13 +30,17 @@ workflows:
             --workspace "$XCODE_WORKSPACE" \
             --scheme "$XCODE_SCHEME"
 
+      - name: Submit to TestFlight
+        script: |
+          echo "$APP_STORE_CONNECT_KEY_B64" | base64 --decode > /tmp/auth_key.p8
+          IPA_PATH=$(find build/ios/ipa -name "*.ipa" | head -1)
+          app-store-connect publish \
+            --path "$IPA_PATH" \
+            --testflight \
+            --private-key @file:/tmp/auth_key.p8 \
+            --key-id "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
+            --issuer-id "$APP_STORE_CONNECT_ISSUER_ID"
+
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
-
-    publishing:
-      app_store_connect:
-        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
-        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
-        submit_to_testflight: true
